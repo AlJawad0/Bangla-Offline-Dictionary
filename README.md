@@ -5,10 +5,6 @@ ESP32-S3 camera board: firmware source, the vendored libraries, the partition
 table, the 12,000-word dictionary, the optional learned-word list, the serial
 tools and prebuilt binaries.
 
-It is a frozen copy of `../integrated_v3` as flashed and verified on MAC
-`74:4d:bd:78:76:c4` on 2026-09-30 (revision **v3r7**). The `.ino` is
-byte-identical to `integrated_v3/integrated_v3.ino`; only its file name changed,
-because Arduino needs the sketch name to match the folder.
 
 What it does: press **CAPTURE** on the touch panel → the camera photo is turned
 upright, every word is boxed on screen, and tapping a word runs the on-device
