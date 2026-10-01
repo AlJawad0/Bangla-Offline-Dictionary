@@ -29,17 +29,7 @@ integrated_v3_final/
 │   ├── tiny_ocr_48x320_int8.h  the OCR model
 │   ├── dict_db.*               dictionary search (PSRAM index + rapidfuzz)
 │   └── ...                     detector, OCR runtime, Bangla shaper/font, UI, touch, web page
-├── rapidfuzz/                  vendored header-only fuzzy matcher (found via the sketch include path)
-├── libraries/Sqlite3Esp32/     Sqlite3Esp32 2.5 -- the one external library, bundled
-├── data/
-│   ├── dictionary_12k.db       the dictionary to install (12,000 words, crc32 1634097C)
-│   ├── wordlist_12k.csv        the source it was built from (reference only)
-│   └── combined_332_words_bangla_meanings.csv   optional learned-word import
-├── tools/
-│   ├── upload_db.py            installs dictionary_12k.db into the board's flash over USB
-│   ├── console.py              reset + read the boot log + send console commands
-│   └── fbdump.py               grab the panel's framebuffer as a PNG
-└── build/esp32.esp32.esp32s3/  prebuilt binaries of exactly this source (see §4B)
+
 ```
 
 ## 2. Hardware
