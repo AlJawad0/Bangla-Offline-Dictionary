@@ -1,0 +1,36 @@
+# integrated_v3 -- one 7 MB app, ffat for the rest.
+#
+# History of this table:
+#   v1/v2   stock app3M_fat9M_16MB: two 3 MB OTA slots + ffat at 0x610000
+#   v3      one 6 MB app (the dead OTA slot paid for it), ffat UNMOVED
+#   now     one 7 MB app, ffat moved to 0x710000 and 1 MB smaller
+#
+# Why app grew again: v3 is 3.40 MB, which is 57 % of a 6 MB slot. The ask was
+# for more than 50 % headroom, and 7 MB puts the same firmware at ~48 % used.
+# This board is flashed over USB and has never done an OTA update, so there is
+# still only one app slot; the whole 16 MB is app + ffat.
+#
+# WHAT THIS COSTS: ffat MOVES, so its contents are lost and the partition is
+# reformatted on first boot. That was acceptable at the time of the change --
+# ffat held 667,648 bytes, essentially just the dictionary.db being replaced
+# anyway, and the learned store was empty (`LEARNED 0 entries`). Any stored
+# photos went with it. If you ever need to preserve ffat across a table change,
+# keep its offset AND size byte-identical, which is what the 6 MB revision did.
+#
+# nvs is deliberately unmoved and sits *before* app0, so it is unaffected by the
+# app slot growing: the touch calibration survives this change.
+#
+# ffat is 8.875 MB and holds the 12k dictionary (556 KB) plus photos, so it is
+# ~93 % free. Do not shrink it further to grow app -- the app does not need it,
+# and moving ffat is what destroys data.
+#
+# Keep this table byte-identical to bangla_lookup_v5/esp32s3_bangla_lookup_v5/
+# partitions.csv, so the two firmwares can be swapped on one board without
+# reinstalling the dictionary.
+#
+# Name,   Type, SubType, Offset,   Size,     Flags
+nvs,      data, nvs,     0x9000,   0x5000,
+otadata,  data, ota,     0xe000,   0x2000,
+app0,     app,  ota_0,   0x10000,  0x700000,
+ffat,     data, fat,     0x710000, 0x8E0000,
+coredump, data, coredump,0xFF0000, 0x10000,
